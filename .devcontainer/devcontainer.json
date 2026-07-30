@@ -1,0 +1,16 @@
+{
+    "name": "CUDA C++ Dev Container",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "cuda-devcontainer",
+    "workspaceFolder": "/rsa",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "nvidia.nsight-vscode-edition"
+            ]
+        }
+    },
+    "remoteUser": "root"
+}
