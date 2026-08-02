@@ -1,5 +1,5 @@
 #include "../include/MultiplicationInv.cuh"
-u_short MultiplicationInv::calc(const u_short &x)
+u_short MultiplicationInv::calc(const u_short &x) const
 {
 
     int u, v, w;

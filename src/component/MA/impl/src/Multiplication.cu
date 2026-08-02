@@ -1,6 +1,6 @@
 #include "../include/Multiplication.cuh"
 
-u_short Multiplication::calc(const u_short &x, const u_short &y)
+u_short Multiplication::calc(const u_short &x, const u_short &y) const 
 {
     u_short t;
     u_short u, v;

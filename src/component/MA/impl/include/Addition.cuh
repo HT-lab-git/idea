@@ -3,5 +3,6 @@
 class Addition : public IIdeaMA
 {
 public:
-    u_short calc(const u_short &x, const u_short &y) override {}
+    Addition() {}
+    u_short calc(const u_short &x, const u_short &y) const override {}
 };
