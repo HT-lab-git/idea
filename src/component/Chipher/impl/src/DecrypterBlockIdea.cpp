@@ -2,8 +2,8 @@
 #include "../../../MA/interface/IIdeaMA.hpp"
 #include <utility>
 
-DecrypterBlockIdea::DecrypterBlockIdea(const IIdeaMA &_mulInv, const IIdeaMA &_mul, const IIdeaMA &_add, const u_short (&_dKey)[52])
-    : _mulInv(_mulInv), _mul(_mul), _add(_add), _dKey(_dKey)
+DecrypterBlockIdea::DecrypterBlockIdea(const IIdeaMA &mulInv, const IIdeaMA &mul, const IIdeaMA &add, const u_short (&dKey)[52])
+    : _mulInv(mulInv), _mul(mul), _add(add), _dKey(dKey)
 {
 }
 void DecrypterBlockIdea::decrypt(const u_short (&cipherTxt)[4], u_short (&outputPlainTxt)[4])
@@ -20,9 +20,9 @@ void DecrypterBlockIdea::decrypt(const u_short (&cipherTxt)[4], u_short (&output
         x3 = _add.calc(x3, _dKey[i * 6 + 2]);
         x4 = _mulInv.calc(x4, _dKey[i * 6 + 3]);
 
-        u_short t0 = _mul.calc(x1 ^ x3, _dKey[i * 6 + 4]);
+        u_short t0 = _mulInv.calc(x1 ^ x3, _dKey[i * 6 + 4]);
         u_short t1 = _add.calc(t0, x2 ^ x4);
-        u_short t2 = _mul.calc(t1, _dKey[i * 6 + 5]);
+        u_short t2 = _mulInv.calc(t1, _dKey[i * 6 + 5]);
         u_short t3 = _add.calc(t0, t2);
 
         x1 ^= t2;

@@ -3,8 +3,8 @@
 #include <utility>
 #include <iostream>
 
-EncrypterBlockIdea::EncrypterBlockIdea(const IIdeaMA &mulInv, const IIdeaMA &mul, const IIdeaMA &add, const u_short (&ekey)[52])
-    : IEncrypter(), _mulInv(mulInv), _mul(mul), _add(add), _eKey(ekey) {}
+EncrypterBlockIdea::EncrypterBlockIdea(const IIdeaMA &mul, const IIdeaMA &add, const u_short (&ekey)[52])
+    : IEncrypter(), _mul(mul), _add(add), _eKey(ekey) {}
 
 void EncrypterBlockIdea::encrypt(const u_short (&plaintxt)[4], u_short *cipherTxt)
 {
@@ -36,6 +36,4 @@ void EncrypterBlockIdea::encrypt(const u_short (&plaintxt)[4], u_short *cipherTx
     cipherTxt[1] = _add.calc(x3, _eKey[49]);
     cipherTxt[2] = _add.calc(x2, _eKey[50]);
     cipherTxt[3] = _mul.calc(x4, _eKey[51]);
-
-    std::cout << "Encrypted block: " << std::hex << cipherTxt[0] << " " << cipherTxt[1] << " " << cipherTxt[2] << " " << cipherTxt[3] << std::endl;
 }

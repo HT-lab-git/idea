@@ -19,8 +19,13 @@ u_short MultiplicationInv::calc(const u_short &x) const
         v1 = t1, v2 = t2, v3 = t3;
     }
     if (u1 < 0)
+    {
         u1 = u1 + 0x10001;
-    return u1 & 0xFFFF;
+    }
+
+    u1 &= 0xFFFF;
+
+    return u1;
 }
 
 u_short MultiplicationInv::calc(const u_short &x, const u_short &y) const

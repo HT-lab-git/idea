@@ -2,14 +2,9 @@
 #include "../../../MA/interface/IIdeaMA.hpp"
 #include <iostream>
 
-IdeaKeyGen::IdeaKeyGen(IIdeaMA &ideaMulInv, const u_short (&key)[8], const u_short (&eKey)[52], const u_short (&dKey)[52])
+IdeaKeyGen::IdeaKeyGen(IIdeaMA &ideaMulInv, const u_short (&key)[8])
     : _mulInv(ideaMulInv), _key(key)
 {
-    for (int i = 0; i < 52; ++i)
-    {
-        _eKey[i] = eKey[i];
-        _dKey[i] = dKey[i];
-    }
 }
 void IdeaKeyGen::generate()
 {
@@ -28,7 +23,7 @@ void IdeaKeyGen::generate()
                 (_eKey[(i + 1) & 0x7 ? i - 7 : i - 15] << 9) |
                 (_eKey[((i + 2) & 0x7) < 2 ? i - 14 : i - 6] >> 7));
         }
-        std::cout << std::hex << _eKey[i] << std::endl;
+        std::cout << std::hex << _eKey[i];
     }
     std::cout << "\n"
               << std::endl;
@@ -59,7 +54,7 @@ void IdeaKeyGen::generate()
     }
     for (i = 0; i <= 52; i++)
     {
-        std::cout << std::hex << _dKey[i] << std::endl;
+        std::cout << std::hex << _dKey[i];
     }
 
     std::cout << "\n"

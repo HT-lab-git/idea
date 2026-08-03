@@ -10,7 +10,7 @@ private:
     IIdeaMA &_mulInv;
 
 public:
-    IdeaKeyGen(IIdeaMA &ideaMulInv, const u_short (&key)[8], const u_short (&ekey)[52], const u_short (&dkey)[52]);
+    IdeaKeyGen(IIdeaMA &ideaMulInv, const u_short (&key)[8]);
     void generate() override;
     u_short *getEKey();
     u_short *getDKey();

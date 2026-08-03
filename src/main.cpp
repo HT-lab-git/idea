@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <iostream>
+#include <algorithm>
+#include <cstring>
 #include "./types.hpp"
 #include "./component/factory.hpp"
 
 int main(void)
 {
-    int i, j, k;
     u_short input[4], output[4], tete[4];
     u_short ekey[52], dkey[52], key[8], getChipher[100];
     char getkey[18], getTxt[100];
@@ -18,93 +19,76 @@ int main(void)
     IIdeaMA &add = addImpl;
 
     std::cout << "-----Please input key:-----" << std::endl;
-
-    for (int i = 0; i < 18; i++)
-    {
-        key[i] = '\0';
-    }
-    for (int i = 0; i < 100; i++)
-    {
-        getTxt[i] = '\0';
-    }
+    std::fill_n(key, 8, 0);
+    std::fill_n(getTxt, 100, '\0');
 
     std::cin.getline(getkey, 18);
 
-    for (i = 0, j = 0; i < 8; i++, j += 2)
+    for (int i = 0, j = 0; i < 8; ++i, j += 2)
     {
-        key[i] = (getkey[j] << 8) | getkey[j + 1];
+        key[i] = static_cast<u_short>((static_cast<unsigned char>(getkey[j]) << 8) | static_cast<unsigned char>(getkey[j + 1]));
     }
-    std::cout << "\n"
-              << std::endl;
-    /*副鍵の生成*/
-    IdeaKeyGen keyGen = IdeaKeyGen(mulInv, key, ekey, dkey);
+
+    IdeaKeyGen keyGen = IdeaKeyGen(mulInv, key);
+    keyGen.generate();
+    std::copy(keyGen.getEKey(), keyGen.getEKey() + 52, ekey);
+    std::copy(keyGen.getDKey(), keyGen.getDKey() + 52, dkey);
 
     std::cout << "-----Please input plaintext:-----" << std::endl;
-
     std::cin.getline(getTxt, 100);
-    std::cout << "\n"
-              << std::endl;
+    std::cout << std::endl;
 
-    std::cout << "-----plaintxt:-----\n"
-              << std::endl;
+    std::cout << "-----plaintext:-----" << std::endl;
+    std::cout << getTxt << std::endl;
+    std::cout << std::endl;
 
-    for (i = 0; i < 100; i++)
-    {
-        std::cout << static_cast<int>(static_cast<unsigned char>(getTxt[i])) << std::endl;
-    }
-    std::cout << "\n"
-              << std::endl;
-
-    /*暗号化、復号化処理用のインスタンスを生成*/
-    EncrypterBlockIdea encrypterBlockIdea = EncrypterBlockIdea(mulInv, mul, add, ekey);
+    EncrypterBlockIdea encrypterBlockIdea = EncrypterBlockIdea(mul, add, ekey);
     DecrypterBlockIdea decrypterBlockIdea = DecrypterBlockIdea(mulInv, mul, add, dkey);
-    /*暗号化処理*/
-    k = 0;
 
-    std::cout << "-----ciphertext:-----\n"
-              << std::endl;
+    int cipherCount = 0;
+    std::cout << "-----ciphertext:-----" << std::endl;
+    const std::size_t plaintextLength = std::strlen(getTxt);
 
-    for (i = 0; i < 100; i += 4)
+    for (std::size_t blockIndex = 0; blockIndex < plaintextLength; blockIndex += 4)
     {
-        input[0] = getTxt[i];
-        input[1] = getTxt[i + 1];
-        input[2] = getTxt[i + 2];
-        input[3] = getTxt[i + 3];
-        encrypterBlockIdea.encrypt((const u_short(&)[4])input, output);
-
-        for (j = 0; j < 4; j++)
+        for (int j = 0; j < 4; ++j)
         {
-            getChipher[k] = output[j];
-            k++;
-            std::cout << std::hex << output[j] << " ";
+            input[j] = 0;
+            if (blockIndex + j < plaintextLength)
+            {
+                input[j] = static_cast<unsigned char>(getTxt[blockIndex + j]);
+            }
+        }
+
+        encrypterBlockIdea.encrypt(input, output);
+
+        for (int j = 0; j < 4; ++j)
+        {
+            getChipher[cipherCount++] = output[j];
+            std::cout << std::hex << output[j];
         }
     }
 
-    std::cout << "\n"
+    std::cout << std::endl
               << std::endl;
 
-    /*復号化処理*/
-
-    std::cout << "-----decrypted text:-----\n"
-              << std::endl;
-
-    for (i = 0; i < 100; i += 4)
+    std::cout << "-----decrypted text:-----" << std::endl;
+    for (int blockStart = 0; blockStart < cipherCount; blockStart += 4)
     {
-        output[0] = getChipher[i];
-        output[1] = getChipher[i + 1];
-        output[2] = getChipher[i + 2];
-        output[3] = getChipher[i + 3];
+        output[0] = getChipher[blockStart];
+        output[1] = getChipher[blockStart + 1];
+        output[2] = getChipher[blockStart + 2];
+        output[3] = getChipher[blockStart + 3];
 
-        decrypterBlockIdea.decrypt((const u_short(&)[4])output, tete);
+        decrypterBlockIdea.decrypt(output, tete);
+
+        for (int j = 0; j < 4; ++j)
+        {
+            std::cout << static_cast<char>(tete[j]);
+        }
     }
 
-    for (j = 0; j < 4; j++)
-    {
-        std::cout << static_cast<unsigned char>(tete[j]);
-    }
-
-    std::cout << "\n"
-              << std::endl;
+    std::cout << std::endl;
 
     return 0;
 }
