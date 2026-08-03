@@ -1,8 +1,6 @@
-#include "../../../types.cuh"
-
 class IChipher
 {
+public:
     virtual ~IChipher() = default;
-    virtual void enCrypt() = 0;
-    virtual void deCtypt() = 0;
+    virtual void Chipher(const IIdeaMA &_mulInv, const IIdeaMA &_mul, const IIdeaMA &_add, const u_short (&_dKey)[52]) = 0;
 };

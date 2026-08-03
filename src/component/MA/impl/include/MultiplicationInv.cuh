@@ -3,5 +3,6 @@
 class MultiplicationInv : public IIdeaMA
 {
 public:
-    u_short calc(const u_short &x) override {}
+    MultiplicationInv() {}
+    u_short calc(const u_short &x) const override {}
 };
