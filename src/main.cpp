@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <iostream>
-#include "./types.cuh"
-#include "./component/factory.cuh"
+#include "./types.hpp"
+#include "./component/factory.hpp"
 
 int main(void)
 {
@@ -50,7 +50,7 @@ int main(void)
 
     for (i = 0; i < 100; i++)
     {
-        std::cout << getTxt[i];
+        std::cout << static_cast<int>(static_cast<unsigned char>(getTxt[i])) << std::endl;
     }
     std::cout << "\n"
               << std::endl;
@@ -66,10 +66,10 @@ int main(void)
 
     for (i = 0; i < 100; i += 4)
     {
-        for (j = 0; j < 4; j++)
-        {
-            input[j] = (getTxt[i + j * 2] << 8) | getTxt[i + j * 2 + 1];
-        }
+        input[0] = getTxt[i];
+        input[1] = getTxt[i + 1];
+        input[2] = getTxt[i + 2];
+        input[3] = getTxt[i + 3];
         encrypterBlockIdea.encrypt((const u_short(&)[4])input, output);
 
         for (j = 0; j < 4; j++)
@@ -90,17 +90,17 @@ int main(void)
 
     for (i = 0; i < 100; i += 4)
     {
-        for (j = 0; j < 4; j++)
-        {
-            input[j] = getChipher[i + j];
-        }
-        decrypterBlockIdea.decrypt((const u_short(&)[4])input, output);
+        output[0] = getChipher[i];
+        output[1] = getChipher[i + 1];
+        output[2] = getChipher[i + 2];
+        output[3] = getChipher[i + 3];
 
-        for (j = 0; j < 4; j++)
-        {
-            tete[j] = output[j];
-            std::cout << std::hex << output[j] << " ";
-        }
+        decrypterBlockIdea.decrypt((const u_short(&)[4])output, tete);
+    }
+
+    for (j = 0; j < 4; j++)
+    {
+        std::cout << static_cast<unsigned char>(tete[j]);
     }
 
     std::cout << "\n"

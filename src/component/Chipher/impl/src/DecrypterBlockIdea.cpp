@@ -1,5 +1,6 @@
-#include "../include/DecrypterBlockIdea.cuh"
-#include "../../../MA/interface/IIdeaMA.cuh"
+#include "../include/DecrypterBlockIdea.hpp"
+#include "../../../MA/interface/IIdeaMA.hpp"
+#include <utility>
 
 DecrypterBlockIdea::DecrypterBlockIdea(const IIdeaMA &_mulInv, const IIdeaMA &_mul, const IIdeaMA &_add, const u_short (&_dKey)[52])
     : _mulInv(_mulInv), _mul(_mul), _add(_add), _dKey(_dKey)

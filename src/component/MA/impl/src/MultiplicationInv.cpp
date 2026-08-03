@@ -1,4 +1,4 @@
-#include "../include/MultiplicationInv.cuh"
+#include "../include/MultiplicationInv.hpp"
 
 u_short MultiplicationInv::calc(const u_short &x) const
 {

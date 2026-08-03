@@ -1,5 +1,5 @@
-#include "../../interface/IDecrypter.cuh"
-#include "../../../../types.cuh"
+#include "../../interface/IDecrypter.hpp"
+#include "types.hpp"
 
 class IIdeaMA;
 

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../interface/IIdeaMA.cuh"
+#include "../../interface/IIdeaMA.hpp"
 
-class Multiplication : public IIdeaMA
+class MultiplicationInv : public IIdeaMA
 {
 public:
-    Multiplication() {}
+    MultiplicationInv() {}
     u_short calc(const u_short &x) const override;
     u_short calc(const u_short &x, const u_short &y) const override;
 };

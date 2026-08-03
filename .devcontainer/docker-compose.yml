@@ -1,5 +1,5 @@
 services:
-  cuda-devcontainer:
+  cpp-devcontainer:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
@@ -7,14 +7,6 @@ services:
       - ..:/idea:cached
 
     command: /bin/bash -c "while sleep 1000; do :; done"
-
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
 
     cap_add:
       - SYS_PTRACE

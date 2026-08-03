@@ -1,3 +1,5 @@
+#include "types.hpp"
+
 class IDecrypter
 {
 public:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../types.cuh"
+#include "types.hpp"
 
 class IIdeaMA
 {

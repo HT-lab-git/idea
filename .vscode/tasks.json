@@ -2,19 +2,19 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build_cuda",
+            "label": "build_cpp",
             "type": "shell",
             "command": "bash",
             "args": [
                 "-lc",
-                "mkdir -p ${workspaceFolder}/src/bin && nvcc -g -G ${workspaceFolder}/src/main.cu $(find ${workspaceFolder}/src/component -name '*.cu' | sort) -I ${workspaceFolder}/src -o ${workspaceFolder}/src/bin/main"
+                "mkdir -p ${workspaceFolder}/src/bin && g++ -std=c++17 -g -O0 -I ${workspaceFolder}/src ${workspaceFolder}/src/main.cpp $(find ${workspaceFolder}/src/component -name '*.cpp' | sort) -o ${workspaceFolder}/src/bin/main"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [
-                "$nvcc"
+                "$gcc"
             ]
         }
     ]

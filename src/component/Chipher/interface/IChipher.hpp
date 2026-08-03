@@ -1,3 +1,7 @@
+#include "types.hpp"
+
+class IIdeaMA;
+
 class IChipher
 {
 public:

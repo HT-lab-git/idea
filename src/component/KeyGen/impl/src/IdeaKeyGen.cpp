@@ -1,22 +1,16 @@
-#include "../include/IdeaKeyGen.cuh"
-#include "../../../MA/interface/IIdeaMA.cuh"
+#include "../include/IdeaKeyGen.hpp"
+#include "../../../MA/interface/IIdeaMA.hpp"
 #include <iostream>
 
 IdeaKeyGen::IdeaKeyGen(IIdeaMA &ideaMulInv, const u_short (&key)[8], const u_short (&eKey)[52], const u_short (&dKey)[52])
-    : _mulInv(ideaMulInv)
+    : _mulInv(ideaMulInv), _key(key)
 {
-    for (int i = 0; i < 8; ++i)
-    {
-        _key[i] = key[i];
-    }
-
     for (int i = 0; i < 52; ++i)
     {
         _eKey[i] = eKey[i];
         _dKey[i] = dKey[i];
     }
 }
-
 void IdeaKeyGen::generate()
 {
     int i, j;

@@ -1,10 +1,10 @@
-#include "../../interface/IKeyGen.cuh"
+#include "../../interface/IKeyGen.hpp"
 class IIdeaMA;
 
 class IdeaKeyGen : public IKeyGen
 {
 private:
-    u_short _key[8];
+    const u_short (&_key)[8];
     u_short _eKey[52];
     u_short _dKey[52];
     IIdeaMA &_mulInv;

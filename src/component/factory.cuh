@@ -1,6 +1,0 @@
-#include "./Chipher/impl/include/EncrypterBlockIdea.cuh"
-#include "./Chipher/impl/include/DecrypterBlockIdea.cuh"
-#include "./KeyGen/impl/include/IdeaKeyGen.cuh"
-#include "./MA/impl/include/Addition.cuh"
-#include "./MA/impl/include/Multiplication.cuh"
-#include "./MA/impl/include/MultiplicationInv.cuh"

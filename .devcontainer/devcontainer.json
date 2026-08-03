@@ -1,7 +1,7 @@
 {
-    "name": "CUDA C++ Dev Container",
+    "name": "C++ Dev Container",
     "dockerComposeFile": "docker-compose.yml",
-    "service": "cuda-devcontainer",
+    "service": "cpp-devcontainer",
     "workspaceFolder": "/idea",
     "customizations": {
         "vscode": {
