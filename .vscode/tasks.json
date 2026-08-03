@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build_cuda",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-lc",
+                "mkdir -p ${workspaceFolder}/src/bin && nvcc -g -G ${workspaceFolder}/src/main.cu $(find ${workspaceFolder}/src/component -name '*.cu' | sort) -I ${workspaceFolder}/src -o ${workspaceFolder}/src/bin/main"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$nvcc"
+            ]
+        }
+    ]
+}

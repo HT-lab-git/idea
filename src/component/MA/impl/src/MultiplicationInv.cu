@@ -1,7 +1,7 @@
 #include "../include/MultiplicationInv.cuh"
+
 u_short MultiplicationInv::calc(const u_short &x) const
 {
-
     int u, v, w;
     int t1, t2, t3;
     int u1, u2, u3;
@@ -21,4 +21,9 @@ u_short MultiplicationInv::calc(const u_short &x) const
     if (u1 < 0)
         u1 = u1 + 0x10001;
     return u1 & 0xFFFF;
+}
+
+u_short MultiplicationInv::calc(const u_short &x, const u_short &y) const
+{
+    return (x * y) & 0xFFFF;
 }
